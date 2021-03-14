@@ -1,0 +1,40 @@
+<div
+  class="dropzone"
+  app-dropzone
+  (hovered)="toggleHover($event)"
+  (dropped)="onDrop($event)"
+  [class.hovering]="isHovering"
+>
+  <form class="upload__container">
+    <textarea
+      name="message"
+      #message="ngModel"
+      cols="30"
+      rows="5"
+      [(ngModel)]="descriptionFile"
+      placeholder="{{ this.translate.data['TextAreaDescription'] | translate }}"
+    ></textarea>
+    <select
+      name="selectedQuantity"
+      id="aantal"
+      class="form-control"
+      [(ngModel)]="pathToBucket"
+    >
+      <option *ngFor="let option of options" [value]="option">{{
+        this.translate.data[option] | translate
+      }}</option>
+    </select>
+    <div>{{ this.translate.data["DRAG_DROP"] | translate }}</div>
+    <input type="file" (change)="onChange($event)" />
+  </form>
+
+  <!-- <button (click)="save()">Save</button> -->
+</div>
+
+<div *ngFor="let file of files">
+  <app-upload-task
+    [file]="file"
+    [pathToBucket]="pathToBucket"
+    [descriptionFile]="descriptionFile"
+  ></app-upload-task>
+</div>

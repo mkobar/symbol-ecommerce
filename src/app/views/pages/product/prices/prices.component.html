@@ -1,0 +1,24 @@
+<br />
+<div class="container">
+  <div class="row" *ngIf="authService.isAdmin$ | async">
+    <div class="col-sm">
+      <div class="float-right">
+        <button
+          type="button"
+          class="btn btn-primary waves-light"
+          data-toggle="modal"
+          data-target="#priceModalLong"
+        >
+          {{ this.translate.data["ADD_PRICES"] | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-table-sortable></app-table-sortable>
+  <ul>
+    <li *ngFor="let item of fileUploads">
+      {{ item }}
+    </li>
+  </ul>
+</div>
+<app-add-prices></app-add-prices>

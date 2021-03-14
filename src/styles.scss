@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "./assets/theme/colors";
+@import "./assets/theme/functions";
+
+router-outlet ~ * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  font-family: "Ubuntu", sans-serif;
+}
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 33vw;
+  font-weight: 200;
+  height: 300px;
+  border: 2px dashed #f16624;
+  border-radius: 5px;
+  background: white;
+  margin: 10px 0;
+
+  &.hovering {
+    border: 2px solid #f16624;
+    color: #dadada !important;
+  }
+
+  .file-label {
+    font-size: 1.2em;
+  }
+}
+
+progress::-webkit-progress-value {
+  transition: width 0.1s ease;
+}

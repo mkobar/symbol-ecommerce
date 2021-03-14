@@ -1,0 +1,15 @@
+
+{
+  "projects": {
+    "default": "payidshop"
+  },
+  "targets": {
+    "payidshop": {
+      "hosting": {
+        "payidshop": [
+          "payidshop"
+        ]
+      }
+    }
+  }
+}
