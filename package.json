@@ -1,5 +1,5 @@
 {
-  "name": "payidshop",
+  "name": "nftshop",
   "version": "2.1.7",
   "private": true,
   "scripts": {
@@ -15,10 +15,10 @@
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/stats-es2015.json",
     "ngrok": "ngrok http 4200 -host-header='localhost:4200'",
-    "dev:ssr": "ng run payidshop:serve-ssr",
-    "serve:ssr": "node dist/payidshop/server/main.js",
-    "build:ssr": "ng build --prod && ng run payidshop:server:production",
-    "prerender": "ng run payidshop:prerender",
+    "dev:ssr": "ng run nft:serve-ssr",
+    "serve:ssr": "node dist/nft/server/main.js",
+    "build:ssr": "ng build --prod && ng run nft:server:production",
+    "prerender": "ng run nft:prerender",
     "deploy-gp": "npx deploy-gh --base-href=/pay-id-shop/"
   },
   "husky": {
