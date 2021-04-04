@@ -1,5 +1,9 @@
 // Core Dependencies
-import { NgModule } from "@angular/core";
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+  NO_ERRORS_SCHEMA,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
@@ -26,6 +30,9 @@ import { UploadTaskComponent } from "../upload-task/upload-task.component";
 import { TableSortableDirective } from "../../directives/table-sortable.directive";
 import { XprBalanceComponent } from "../user/xpr-balance/xpr-balance.component";
 import { BalanceComponent } from "../user/balance/balance.component";
+import { CountDownComponent } from "../user/count-down/count-down.component";
+import { UserOrdersComponent } from "./user-orders/user-orders.component";
+import { NftComponent } from "./nft/nft.component";
 
 @NgModule({
   imports: [
@@ -49,9 +56,11 @@ import { BalanceComponent } from "../user/balance/balance.component";
     DropzoneDirective,
     UploadTaskComponent,
     TableSortableDirective,
-    XprBalanceComponent,
-    BalanceComponent,
+    UserOrdersComponent,
+    NftComponent,
+    //BalanceComponent,
   ],
   exports: [BestProductComponent],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductModule {}

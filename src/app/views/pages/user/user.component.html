@@ -10,20 +10,34 @@
         </li>
         <li class="list-group-item hoverable">
           <a
-            [routerLink]="[
-              '/users',
-              { outlets: { profileOutlet: ['favourite-products'] } }
-            ]"
+            class="nav-link"
+            href="javascript:;;"
+            [routerLink]="['/products/favourite-products']"
             >Your Wishlist</a
           >
         </li>
         <li class="list-group-item hoverable">
           <a
-            [routerLink]="[
-              '/users',
-              { outlets: { profileOutlet: ['cart-items'] } }
-            ]"
+            class="nav-link"
+            href="javascript:;;"
+            [routerLink]="['/products/cart-items']"
             >Your Cart</a
+          >
+        </li>
+        <li class="list-group-item hoverable">
+          <a
+            class="nav-link"
+            href="javascript:;;"
+            [routerLink]="['/products/user-orders']"
+            >Your Orders</a
+          >
+        </li>
+        <li class="list-group-item hoverable">
+          <a
+            class="nav-link"
+            href="javascript:;;"
+            [routerLink]="['/products/nft']"
+            >NFT</a
           >
         </li>
       </ul>

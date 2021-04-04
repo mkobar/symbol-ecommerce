@@ -30,7 +30,7 @@
     <!--First column-->
     <div
       class="item"
-      style="padding: 20px;"
+      style="padding: 20px"
       *ngFor="let product of bestProducts; let i = index"
     >
       <div class="mb-r">
@@ -75,7 +75,9 @@
 
             <!--Card footer-->
             <div class="card-footer">
-              <span class="left">{{ product.productPrice }} XRP </span>
+              <span class="left"
+                >{{ product.productPrice }} <img src="/assets/img/conn10.png" />
+              </span>
               <span class="right">
                 <a
                   placement="top"

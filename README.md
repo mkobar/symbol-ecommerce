@@ -2,7 +2,7 @@
 
 Developing a **ShoppingCart (Ecommerce) Application using Angular-9**.
 
-**Live Demo** : [PayId Shop](https://spreadzp.github.io/pay-id-shop/)
+**Live Demo** : [Symbol Shop](https://spreadzp.github.io/pay-id-shop/)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 

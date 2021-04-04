@@ -14,7 +14,17 @@
       [(ngModel)]="descriptionFile"
       placeholder="{{ this.translate.data['TextAreaDescription'] | translate }}"
     ></textarea>
-    <select
+    <input
+      type="text"
+      [(ngModel)]="pictureName"
+      placeholder="{{ this.translate.data['pictureName'] | translate }}"
+    />
+    <input
+      type="number"
+      [(ngModel)]="startPrice"
+      placeholder="{{ this.translate.data['startPrice'] | translate }}"
+    />
+    <!-- <select
       name="selectedQuantity"
       id="aantal"
       class="form-control"
@@ -23,7 +33,7 @@
       <option *ngFor="let option of options" [value]="option">{{
         this.translate.data[option] | translate
       }}</option>
-    </select>
+    </select> -->
     <div>{{ this.translate.data["DRAG_DROP"] | translate }}</div>
     <input type="file" (change)="onChange($event)" />
   </form>
@@ -36,5 +46,7 @@
     [file]="file"
     [pathToBucket]="pathToBucket"
     [descriptionFile]="descriptionFile"
+    [pictureName]="pictureName"
+    [startPrice]="startPrice"
   ></app-upload-task>
 </div>

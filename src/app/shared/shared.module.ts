@@ -30,9 +30,10 @@ import { FireBaseConfig } from "./../../environments/firebase.config";
 import { FileService } from "./services/file.service";
 import { PriceService } from "./services/price.services";
 import { TableSortableComponent } from "./elements/table-sortable/table-sortable.component";
-import { PayIdService } from "./services/pay-id.service";
 import { AboutComponent } from "./components/about/about.component";
 import { SymbolService } from "./services/symbol.service";
+import { QrService } from "./services/qr.service";
+import { OrderService } from "./services/order.service";
 
 @NgModule({
   imports: [
@@ -92,8 +93,9 @@ import { SymbolService } from "./services/symbol.service";
     FormBuilder,
     FileService,
     PriceService,
-    PayIdService,
-    SymbolService
+    SymbolService,
+    QrService,
+    OrderService,
   ],
 })
 export class SharedModule {}

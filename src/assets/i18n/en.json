@@ -20,7 +20,15 @@
   "category": "Categories",
   "description": "Description",
   "TextAreaDescription": "Add description of the file",
+  "pictureName": "Add the picture name",
+  "startPrice": "Add start price for the picture",
   "shoes": "Shoes",
   "uniform": "Uniform",
-  "defending": "defending"
+  "defending": "defending",
+  "billingId": "Billing Id",
+  "orderId": "Order Id",
+  "hashSymbolPayment": "Hash Symbol tx",
+  "sumOrder": "Sum in Symbol",
+  "statusOrder": "Status order",
+  "statusPayment": "Status payment"
 }

@@ -46,10 +46,15 @@
 
                   <!--Description-->
                   <p class="card-text">{{ product.productDescription }}</p>
-
+                  <p class="card-text" *ngFor="let bit of product.bits">
+                    {{ bit }}@@@
+                  </p>
                   <!--Card footer-->
                   <div class="card-footer">
-                    <span class="left"> {{ product.productPrice }} XRP</span>
+                    <span class="left">
+                      {{ product.productPrice }}
+                      <img src="/assets/img/conn10.png"
+                    /></span>
                     <span class="right">
                       <a
                         placement="top"

@@ -1,3 +1,5 @@
+import { Bit } from "./bit";
+
 export class Product {
   $key: string;
   productId: number;
@@ -9,6 +11,7 @@ export class Product {
   productAdded: number;
   productQuatity: number;
   ratings: number;
+  bits: Bit[];
   favourite: boolean;
   productSeller: string;
 }

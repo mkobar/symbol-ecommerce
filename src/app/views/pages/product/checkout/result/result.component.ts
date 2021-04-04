@@ -1,11 +1,18 @@
-import { Product } from "../../../../../shared/models/product";
-import { ProductService } from "../../../../../shared/services/product.service";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import * as jspdf from "jspdf";
+import { Router } from "@angular/router";
+const shortId = require("shortid");
 import html2canvas from "html2canvas";
-import { PayIdService } from "src/app/shared/services/pay-id.service";
 import { ToastrService } from "src/app/shared/services/toastr.service";
 import { SymbolService } from "src/app/shared/services/symbol.service";
+import { QrService } from "src/app/shared/services/qr.service";
+import { Product } from "../../../../../shared/models/product";
+import { ProductService } from "../../../../../shared/services/product.service";
+import { OrderService } from "src/app/shared/services/order.service";
+import { Order } from "src/app/shared/models/order";
+import { BillingService } from "src/app/shared/services/billing.service";
+import { Billing } from "src/app/shared/models/billing";
+
 declare var $: any;
 @Component({
   selector: "app-result",
@@ -13,16 +20,27 @@ declare var $: any;
   styleUrls: ["./result.component.scss"],
 })
 export class ResultComponent implements OnInit {
+  selectedFile: File;
   products: Product[];
   date: number;
   totalPrice = 0;
-  tax = 6.4;
+  tax = 2;
+  confirmedHash = "";
+  userPrivateKey = "";
+  isPayment = false;
+  hasPrivateKey = false;
+  nameFile = "";
+  orderNumber = "Order_" + shortId.generate();
+  bill = {} as Billing;
 
   constructor(
     private productService: ProductService,
-    private payIdService: PayIdService,
+    private orderService: OrderService,
+    private billingService: BillingService,
     private toastrService: ToastrService,
-    private symbolService: SymbolService
+    private symbolService: SymbolService,
+    private qrService: QrService,
+    private router: Router
   ) {
     /* Hiding Billing Tab Element */
     document.getElementById("productsTab").style.display = "none";
@@ -39,7 +57,19 @@ export class ResultComponent implements OnInit {
     this.date = Date.now();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.bill = this.billingService.getLocalBilling();
+    console.log("this.bill :>> ", this.bill);
+    this.symbolService.hasPrivateKey.subscribe((hasKey) => {
+      this.hasPrivateKey = hasKey;
+      if (this.hasPrivateKey) {
+        this.toastrService.success(
+          "Success",
+          "The bill was signed by the private key, you can do payment now"
+        );
+      }
+    });
+  }
 
   downloadReceipt() {
     const data = document.getElementById("receipt");
@@ -61,15 +91,48 @@ export class ResultComponent implements OnInit {
   }
 
   payment(totalSum: number) {
-    this.payIdService
-      .doPayment(
-        totalSum,
-        "rnPtkxF79LwCgCgxhZADA8qQS1GhetYy2R",
-        "snRq1KMdS75DUZaTDf4SykuJDyoX9"
-      )
-      .then((result) => {
-        this.productService.clearBacket();
-        this.toastrService.success("Success payment", JSON.stringify(result));
+    this.isPayment = true;
+    this.symbolService.doPayment(totalSum, this.bill.$key).then((result) => {
+      console.log(
+        "🚀 ~ file: result.component.ts ~ line 82 ~ ResultComponent ~ .then ~ result",
+        result
+      );
+
+      this.symbolService.confirmedHash.subscribe((hash) => {
+        console.log(
+          "🚀 ~ file: result.component.ts ~ line 85 ~ ResultComponent ~ .then ~ hash",
+          hash
+        );
+
+        if (hash !== "") {
+          this.products.map((prod) => (prod.$key = "qqwer"));
+          console.log(
+            "🚀 ~ file: result.component.ts ~ line 105 ~ ResultComponent ~ .then ~ this.products",
+            this.products
+          );
+          const order = new Order();
+          order.hashSymbolPayment = hash;
+          order.billingId = this.bill.$key;
+          order.orderId = this.orderNumber;
+          // order.products = this.products;
+          order.sumOrder = totalSum;
+          order.statusPayment = "received";
+          order.statusOrder = "Not sended";
+          this.orderService.createOrder(order);
+          console.log("this.products :>> ", this.products);
+          this.isPayment = false;
+          this.productService.clearBacket();
+          this.billingService.clearBillFromLocalStorage();
+          this.toastrService.success(`Success payment ${hash}`, hash);
+          this.router.navigate(["/"]);
+        }
       });
+    });
+  }
+
+  onFileSelect(event) {
+    this.selectedFile = event.target.files[0];
+    this.nameFile = this.selectedFile.name;
+    this.qrService.readQrFile(this.selectedFile);
   }
 }

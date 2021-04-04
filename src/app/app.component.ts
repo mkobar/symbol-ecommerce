@@ -10,7 +10,7 @@ declare var $: any;
   animations: [fadeAnimation],
 })
 export class AppComponent implements OnInit {
-  title = "PayId Shop";
+  title = "Symbol Shop";
 
   constructor(private userService: UserService) {}
 

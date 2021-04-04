@@ -15,6 +15,8 @@ import {
 export class UploaderComponent implements OnInit {
   isHovering: boolean;
   descriptionFile = "";
+  pictureName = "";
+  startPrice = 0;
   files: File[] = [];
   selectedImage: any = null;
   options: string[] = ["prices", "shoes", "uniform", "defending"];

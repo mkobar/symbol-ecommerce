@@ -20,7 +20,14 @@
   "category": "Категории",
   "description": "Описание",
   "TextAreaDescription": "Добавьте описание файла",
+  "pictureName": "Add the picture name",
+  "startPrice": "Add start price for the picture",
   "shoes": "Спецобувь",
   "uniform": "Спецодежда",
-  "defending": "Средства защиты"
+  "defending": "Средства защиты",
+  "billingId": "Billing Id",
+  "orderId": "Order Id",
+  "hashSymbolPayment": "Hash Symbol tx",
+  "sumOrder": "Sum in Symbol",
+  "statusOrder": "Status order"
 }

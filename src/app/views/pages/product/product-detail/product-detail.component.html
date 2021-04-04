@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="product-image">
-        <div class="view hm-zoom z-depth-2" style="cursor: pointer;">
+        <div class="view hm-zoom z-depth-2" style="cursor: pointer">
           <img
             [src]="product.productImageUrl"
             [alt]="product.productName"
@@ -11,7 +11,7 @@
             class="img-fluid rounded"
           />
         </div>
-        <div class="" style="margin-top: 15px;">
+        <div class="" style="margin-top: 15px">
           <ul class="list-group mb-3">
             <li
               class="list-group-item d-flex justify-content-between lh-condensed"
@@ -19,9 +19,9 @@
               <div>
                 <h6 class="my-0">Product Price</h6>
               </div>
-              <span class="text-muted" style="color: crimson !important;">
-                {{ product.productPrice }} XRP</span
-              >
+              <span class="text-muted" style="color: crimson !important">
+                {{ product.productPrice }} <img src="/assets/img/conn10.png"
+              /></span>
             </li>
             <li
               class="list-group-item d-flex justify-content-between lh-condensed"
@@ -29,7 +29,7 @@
               <div>
                 <h6 class="my-0">Product Seller</h6>
               </div>
-              <span class="text-muted" style="color: crimson !important;">{{
+              <span class="text-muted" style="color: crimson !important">{{
                 product.productSeller
               }}</span>
             </li>
@@ -43,7 +43,7 @@
     <div class="col-sm-8">
       <div class="product-detail">
         <h5 class="product-head">Product Details</h5>
-        <table class="table" cellspacing="0" style="max-height: 28px;">
+        <table class="table" cellspacing="0" style="max-height: 28px">
           <tbody>
             <tr>
               <th scope="row">Product Name</th>

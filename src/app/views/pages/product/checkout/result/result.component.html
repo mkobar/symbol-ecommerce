@@ -1,7 +1,7 @@
 <div class="mt-5 mb-5" id="receipt">
   <a
     name=""
-    style="position: relative; float: right;"
+    style="position: relative; float: right"
     id=""
     class="btn btn-primary"
     href="javascript:;;"
@@ -13,16 +13,17 @@
   <div class="row">
     <div
       class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3"
-      style="margin: auto;"
+      style="margin: auto"
     >
       <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6">
           <address>
             <strong>Bill</strong>
             <br />
-            JOHN L, UA 69005
+            {{ bill.firstName }} {{ bill.lastName }} {{ bill.country }},
+            {{ bill.state }} {{ bill.zip }}
             <br />
-            <abbr title="Phone">P:</abbr> (+38) 093-1536580
+            <abbr title="Email">Email:</abbr> {{ bill["email"] }}
           </address>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 text-right">
@@ -30,7 +31,7 @@
             <em>Date: {{ date | date }}</em>
           </p>
           <p>
-            <em>Receipt #: 34522677W</em>
+            <em>Receipt #: {{ orderNumber }}</em>
           </p>
         </div>
       </div>
@@ -56,10 +57,10 @@
               </td>
               <td></td>
               <td class="col-md-1 text-center">
-                {{ product.productPrice }} XRP
+                {{ product.productPrice }} <img src="/assets/img/conn10.png" />
               </td>
               <td class="col-md-1 text-center">
-                {{ product.productPrice }} XRP
+                {{ product.productPrice }} <img src="/assets/img/conn10.png" />
               </td>
             </tr>
             <tr>
@@ -78,7 +79,9 @@
                   <strong>{{ totalPrice }}</strong>
                 </p>
                 <p>
-                  <strong> {{ tax }} XRP</strong>
+                  <strong>
+                    {{ tax }}% <img src="/assets/img/conn10.png"
+                  /></strong>
                 </p>
               </td>
             </tr>
@@ -90,19 +93,53 @@
               </td>
               <td class="text-center text-danger">
                 <h4>
-                  <strong> {{ totalPrice + tax }} XRP</strong>
+                  <strong>
+                    {{ totalPrice * (1 + tax / 100) }}
+                    <img src="/assets/img/conn10.png"
+                  /></strong>
                 </h4>
               </td>
             </tr>
           </tbody>
         </table>
-        <button
-          type="button"
-          class="btn btn-success btn-lg btn-block"
-          (click)="payment(totalPrice + tax)"
-        >
-          Pay Now <span class="glyphicon glyphicon-chevron-right"></span>
-        </button>
+        <div *ngIf="!isPayment">
+          <div *ngIf="!hasPrivateKey">
+            <div>
+              For signing the payment need to use the private key of the account
+            </div>
+            <input
+              style="display: none"
+              type="file"
+              (change)="onFileSelect($event)"
+              #hiddenfileinput
+            />
+
+            <button
+              (click)="hiddenfileinput.click()"
+              class="btn btn-primary btn-lg btn-block"
+            >
+              <i class="fa fa-key"></i>
+              Use private key from QR code
+            </button>
+          </div>
+
+          <div *ngIf="hasPrivateKey">
+            <button
+              type="button"
+              class="btn btn-success btn-lg btn-block"
+              (click)="payment(totalPrice * (1 + tax / 100))"
+            >
+              Pay Now <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="isPayment" class="payment">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden"></span>
+          </div>
+          <app-count-down></app-count-down>
+        </div>
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ export class ToastrService {
   constructor() {}
 
   success(title, msg) {
-    toastr.success(msg, title);
+    toastr.success(msg, title, { timeOut: 5000 });
   }
   info(title, msg) {
     toastr.info(msg, title);

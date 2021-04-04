@@ -6,6 +6,8 @@ import { Routes } from "@angular/router";
 
 import { ProductDetailComponent } from "./product-detail/product-detail.component";
 import { PricesComponent } from "./prices/prices.component";
+import { UserOrdersComponent } from "./user-orders/user-orders.component";
+import { NftComponent } from "./nft/nft.component";
 
 export const ProductRoutes: Routes = [
   {
@@ -30,6 +32,14 @@ export const ProductRoutes: Routes = [
       {
         path: "prices",
         component: PricesComponent,
+      },
+      {
+        path: "user-orders",
+        component: UserOrdersComponent,
+      },
+      {
+        path: "nft",
+        component: NftComponent,
       },
       {
         path: "checkouts",
