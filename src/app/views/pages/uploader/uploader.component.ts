@@ -22,7 +22,7 @@ export class UploaderComponent implements OnInit {
   isHovering: boolean;
   descriptionFile = "";
   pictureName = "";
-  startPrice = 0;
+  startPrice = 123456;
   files: File[] = [];
   selectedImage: any = null;
   options: string[] = ["prices", "shoes", "uniform", "defending"];

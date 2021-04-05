@@ -206,7 +206,9 @@ export class SymbolService {
   }
 
   getBalance() {
-    const rawAddress = localStorage.getItem("symbolAddress");
+    let rawAddress = localStorage.getItem("symbolAddress");
+    if (!rawAddress)
+      rawAddress = "TDNS2K-QNITF5-DZGA3F-XONKGV-U6YBXE-WKTOUG-XQY";
     const address = Address.createFromRawAddress(rawAddress);
     console.log(
       "🚀 ~ file: symbol.service.ts ~ line 42 ~ SymbolService ~ getBalance ~ address",
