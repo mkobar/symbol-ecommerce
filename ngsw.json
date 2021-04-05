@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1617611492505,
+  "timestamp": 1617629738981,
   "index": "/symbol-ecommerce/index.html",
   "assetGroups": [
     {
@@ -14,8 +14,8 @@
         "/symbol-ecommerce/6-es5.fab7cc693805c0299267.js",
         "/symbol-ecommerce/favicon.ico",
         "/symbol-ecommerce/index.html",
-        "/symbol-ecommerce/main-es2015.cf9a4e2f41a92a34abf9.js",
-        "/symbol-ecommerce/main-es5.cf9a4e2f41a92a34abf9.js",
+        "/symbol-ecommerce/main-es2015.776a611afab9caef72c9.js",
+        "/symbol-ecommerce/main-es5.776a611afab9caef72c9.js",
         "/symbol-ecommerce/manifest.webmanifest",
         "/symbol-ecommerce/polyfills-es2015.e52e1fa51ffda1e7121c.js",
         "/symbol-ecommerce/polyfills-es5.1db90d97aca05b1a2a16.js",
@@ -141,9 +141,9 @@
     "/symbol-ecommerce/fontawesome-webfont.8b43027f47b20503057d.eot": "d980c2ce873dc43af460d4d572d441304499f400",
     "/symbol-ecommerce/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg": "98a8aa5cf7d62c2eff5f07ede8d844b874ef06ed",
     "/symbol-ecommerce/fontawesome-webfont.f691f37e57f04c152e23.woff": "28b782240b3e76db824e12c02754a9731a167527",
-    "/symbol-ecommerce/index.html": "636b61492b84fd61a70a83ed54ba2d2de5d1430a",
-    "/symbol-ecommerce/main-es2015.cf9a4e2f41a92a34abf9.js": "80e373f7f566737aa8c649d84c6dc0460e96a44d",
-    "/symbol-ecommerce/main-es5.cf9a4e2f41a92a34abf9.js": "138481e87543e75bc31b68199b39787e6c6bc995",
+    "/symbol-ecommerce/index.html": "b7397574bd98d668102828d15cb01e1a6b8b1672",
+    "/symbol-ecommerce/main-es2015.776a611afab9caef72c9.js": "27c499cc109759544323974fc04c0b5851d5000b",
+    "/symbol-ecommerce/main-es5.776a611afab9caef72c9.js": "e30e66517b4ae1c531635c142e02f2803f57ca24",
     "/symbol-ecommerce/manifest.webmanifest": "da9d41f4ab9488e61805936c0d385b08432ce0f4",
     "/symbol-ecommerce/owl.video.play.7f01b07148f205f6e825.png": "c0d64356ec2758cb280d183b4829c923e5ff61e5",
     "/symbol-ecommerce/polyfills-es2015.e52e1fa51ffda1e7121c.js": "08f3139fb451fc8c2f8b7f831209003aaec673ff",
