@@ -39,6 +39,7 @@ export class SymbolService {
   symbolBalance = new BehaviorSubject(123);
   confirmedHash = new BehaviorSubject("");
   messageFromTransaction = new BehaviorSubject("");
+  isCreatingMosaic = new BehaviorSubject(false);
   hasPrivateKey = new BehaviorSubject(false);
   networkType = NetworkType.TEST_NET;
   epochAdjustment = 1573430400;
@@ -80,9 +81,12 @@ export class SymbolService {
     // replace with network type
     const networkType = NetworkType.TEST_NET;
     // replace with private key
-    const privateKey =
-      "F5073B7119B619EBDF08DDCF541C985DDC5ACE074EDF91FE09B0C429CFA9AD48";
-    const account = Account.createFromPrivateKey(privateKey, networkType);
+    // const privateKey =
+    //   "F5073B7119B619EBDF08DDCF541C985DDC5ACE074EDF91FE09B0C429CFA9AD48";
+    const account = Account.createFromPrivateKey(
+      this.userPrivateKey,
+      networkType
+    );
     // replace with duration (in blocks)
     const duration = UInt64.fromUint(10000);
     // replace with custom mosaic flags

@@ -6,6 +6,9 @@ import {
   FormGroup,
   FormControl,
 } from "@angular/forms";
+import { SymbolService } from "src/app/shared/services/symbol.service";
+import { QrService } from "src/app/shared/services/qr.service";
+import { ToastrService } from "src/app/shared/services/toastr.service";
 
 @Component({
   selector: "app-uploader",
@@ -13,6 +16,9 @@ import {
   styleUrls: ["./uploader.component.scss"],
 })
 export class UploaderComponent implements OnInit {
+  selectedFile: File;
+  nameFile = "";
+  isPayment = false;
   isHovering: boolean;
   descriptionFile = "";
   pictureName = "";
@@ -21,8 +27,29 @@ export class UploaderComponent implements OnInit {
   selectedImage: any = null;
   options: string[] = ["prices", "shoes", "uniform", "defending"];
   pathToBucket = this.options[0];
-  constructor(public translate: TranslateService) {}
-  ngOnInit() {}
+  hasPrivateKey = false;
+  isCreatingMosaic = false;
+  constructor(
+    public translate: TranslateService,
+    private symbolService: SymbolService,
+    private qrService: QrService,
+    private toastrService: ToastrService
+  ) {}
+  ngOnInit() {
+    this.symbolService.hasPrivateKey.subscribe((hasKey) => {
+      this.hasPrivateKey = hasKey;
+      if (this.hasPrivateKey) {
+        this.toastrService.success(
+          "Success",
+          "The private key added, you can create mosaic"
+        );
+      }
+    });
+
+    this.symbolService.isCreatingMosaic.subscribe((hasMosaic) => {
+      this.isCreatingMosaic = hasMosaic;
+    });
+  }
 
   toggleHover(event: boolean) {
     this.isHovering = event;
@@ -44,5 +71,11 @@ export class UploaderComponent implements OnInit {
   showPreview($event) {
     console.log("event.target :>> ", event.target);
     this.selectedImage = event.target["files"][0];
+  }
+
+  onFileSelect(event) {
+    this.selectedFile = event.target.files[0];
+    this.nameFile = this.selectedFile.name;
+    this.qrService.readQrFile(this.selectedFile);
   }
 }

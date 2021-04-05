@@ -10,7 +10,7 @@ declare var $: any;
   animations: [fadeAnimation],
 })
 export class AppComponent implements OnInit {
-  title = "Symbol Shop";
+  title = "NFT Symbol Shop";
 
   constructor(private userService: UserService) {}
 

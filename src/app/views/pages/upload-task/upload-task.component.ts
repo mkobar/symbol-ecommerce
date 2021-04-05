@@ -27,12 +27,13 @@ export class UploadTaskComponent implements OnInit {
   @Input() descriptionFile: string;
   @Input() pictureName: string;
   @Input() startPrice: number;
+  @Input() hasPrivateKey: boolean;
   task: AngularFireUploadTask;
   storage = null;
   percentage: Observable<number>;
   snapshot: Observable<any>;
   downloadURL: string;
-  hasPrivateKey = false;
+
   constructor(
     private fstorage: FileService,
     private db: AngularFirestore,
@@ -53,12 +54,6 @@ export class UploadTaskComponent implements OnInit {
     );
     this.storage = this.fstorage.getStorage();
     this.startUpload();
-    this.symbolService.hasPrivateKey.subscribe((hasKey) => {
-      this.hasPrivateKey = hasKey;
-      if (this.hasPrivateKey) {
-        // this.toastrService.success('Success', 'The bill was signed by the private key, you can do payment now');
-      }
-    });
   }
 
   startUpload() {
@@ -106,6 +101,7 @@ export class UploadTaskComponent implements OnInit {
   }
   createMosaic() {
     this.symbolService.createMosaic("test1", this.downloadURL).then(() => {
+      this.symbolService.isCreatingMosaic.next(true);
       this.symbolService.confirmedHash.subscribe((hash) => {
         console.log(
           "🚀 ~ file: result.component.ts ~ line 85 ~ ResultComponent ~ .then ~ hash",
@@ -125,12 +121,13 @@ export class UploadTaskComponent implements OnInit {
           newNft.productDescription = this.descriptionFile;
           const bit = new Bit();
           bit.addressBuyer = "KJHJKHKJH";
-          bit.hash = "KJHHYTTTYUUIOIPUIOPUIOP";
+          bit.hash = "hash";
           bit.rate = 14789654;
           newNft.bits = [];
-          newNft.bits.push(bit);
+          newNft.bits[0] = bit;
           this.productService.createProduct(newNft);
           this.toastrService.success(`New nft added ${hash}`, hash);
+          this.symbolService.isCreatingMosaic.next(false);
           this.router.navigate(["/"]);
         }
       });

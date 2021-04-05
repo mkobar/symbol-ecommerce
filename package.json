@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build-space": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve --prod",
     "test": "ng test",
     "postinstall": "node patch.js",
     "prod": "ng build --prod",
@@ -19,7 +19,7 @@
     "serve:ssr": "node dist/nftshop/server/main.js",
     "build:ssr": "ng build --prod && ng run nftshop:server:production",
     "prerender": "ng run nftshop:prerender",
-    "deploy-gp": "npx deploy-gh --base-href=/symbol-ecommerce/"
+    "deploy-gp": "npx deploy-gh --base-href=/symbol-nft/"
   },
   "husky": {
     "hooks": {

@@ -20,7 +20,6 @@ import { UserModule } from "./views/pages/user/user.module";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { XprBalanceComponent } from "./views/pages/user/xpr-balance/xpr-balance.component";
 
 /* to load and set en.json as the default application language */
 export function setupTranslateFactory(service: TranslateService) {

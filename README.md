@@ -1,8 +1,8 @@
-# Angular-9 - ShoppingCart + MDBootstrap + Firebase (Realtime Database) + i18n
+# Angular-9 - FT Symbol Shop + MDBootstrap + Firebase (Realtime Database) + i18n
 
-Developing a **ShoppingCart (Ecommerce) Application using Angular-9**.
+Developing a **NFT Symbol Shop (Ecommerce) Application using Angular-9**.
 
-**Live Demo** : [Symbol Shop](https://spreadzp.github.io/pay-id-shop/)
+**Live Demo** : [NFT Symbol Shop](https://spreadzp.github.io/symbol-ecommerce/)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 
@@ -100,7 +100,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Deploy GitHub Pages
 
 ```
-npm run github-deploy
+npm run deploy-gp
 ```
 
 ## Screenshots:

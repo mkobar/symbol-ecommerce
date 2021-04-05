@@ -18,5 +18,7 @@
     Resume
   </button>
   <button (click)="createApostille()">Use Apostille for file</button> -->
-  <button (click)="createMosaic()">Create NFT Mosaic</button>
+  <div *ngIf="hasPrivateKey">
+    <button (click)="createMosaic()">Create NFT Mosaic</button>
+  </div>
 </div>
