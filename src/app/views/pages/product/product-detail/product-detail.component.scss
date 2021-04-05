@@ -10,3 +10,8 @@
 .product-ship {
   height: 15rem;
 }
+.tx-payment {
+  &:hover {
+    cursor: pointer;
+  }
+}

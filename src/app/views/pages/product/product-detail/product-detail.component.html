@@ -65,8 +65,25 @@
               <th scope="row">Product Added on</th>
               <td>{{ product.productAdded * 1000 | date }}</td>
             </tr>
+
+            <tr>
+              <th scope="row">Hash the mosaic</th>
+              <td
+                (click)="checkTransaction(product.bits[0].hash)"
+                class="tx-payment"
+              >
+                {{ product.bits[0].hash }}
+              </td>
+            </tr>
+            <tr *ngIf="mosaicId !== 0">
+              <th scope="row">Mosaic Id</th>
+              <td>{{ mosaicId }}</td>
+            </tr>
           </tbody>
         </table>
+        <!-- <div *ngFor="let bit of product.bits"> -->
+        <!-- <span>{{product.bits[0].addressBuyer}}</span> <span>{{product.bits[0].hash}}</span><span>{{product.bits[0].rate}}</span>        -->
+        <!-- </div> -->
       </div>
     </div>
   </div>

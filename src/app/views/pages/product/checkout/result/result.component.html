@@ -1,5 +1,5 @@
 <div class="mt-5 mb-5" id="receipt">
-  <a
+  <!-- <a
     name=""
     style="position: relative; float: right"
     id=""
@@ -8,7 +8,7 @@
     role="button"
     (click)="downloadReceipt()"
     ><i class="fa fa-download"></i> Receipt</a
-  >
+  > -->
 
   <div class="row">
     <div
@@ -17,22 +17,22 @@
     >
       <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6">
-          <address>
+          <!-- <address>
             <strong>Bill</strong>
             <br />
             {{ bill.firstName }} {{ bill.lastName }} {{ bill.country }},
             {{ bill.state }} {{ bill.zip }}
             <br />
             <abbr title="Email">Email:</abbr> {{ bill["email"] }}
-          </address>
+          </address> -->
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 text-right">
           <p>
             <em>Date: {{ date | date }}</em>
           </p>
-          <p>
+          <!-- <p>
             <em>Receipt #: {{ orderNumber }}</em>
-          </p>
+          </p> -->
         </div>
       </div>
       <div class="row">
@@ -42,7 +42,7 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Product</th>
+              <th>NFT</th>
               <td></td>
               <th class="text-center">Price</th>
               <th class="text-center">Total</th>
@@ -127,13 +127,13 @@
             <button
               type="button"
               class="btn btn-success btn-lg btn-block"
-              (click)="payment(totalPrice * (1 + tax / 100))"
+              (click)="makeBid(totalPrice * (1 + tax / 100))"
             >
               Pay Now <span class="glyphicon glyphicon-chevron-right"></span>
             </button>
           </div>
         </div>
-
+        <!-- (click)="payment(totalPrice * (1 + tax / 100))" -->
         <div *ngIf="isPayment" class="payment">
           <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden"></span>

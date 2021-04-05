@@ -28,6 +28,8 @@ import {
   MosaicSupplyChangeAction,
   MosaicSupplyChangeTransaction,
   SignedTransaction,
+  NamespaceId,
+  HashLockTransaction,
 } from "symbol-sdk";
 import { BehaviorSubject, of } from "rxjs";
 import { mergeMap, delay, takeUntil } from "rxjs/operators";
@@ -38,12 +40,16 @@ import { QrService } from "./qr.service";
 export class SymbolService {
   symbolBalance = new BehaviorSubject(123);
   confirmedHash = new BehaviorSubject("");
+  mosaicId = new BehaviorSubject(0);
   messageFromTransaction = new BehaviorSubject("");
   isCreatingMosaic = new BehaviorSubject(false);
   hasPrivateKey = new BehaviorSubject(false);
   networkType = NetworkType.TEST_NET;
   epochAdjustment = 1573430400;
   accountService = null;
+  XYMMosaicId = "2CF403E85507F39E";
+  sellerPublicKey =
+    "F470B50F4710F86C67FDAF2D7AA34BD2E916DA66FDCA1EB9062273DA26CF80E3";
   networkGenerationHash =
     "45FBCF2F0EA36EFA7923C9BC923D6503169651F7FA4EFC46A8EAF5AE09057EBD";
   rawAddress = "TDLEYX-HXPTRG-DJA2TM-6JD2CR-2NS6QT-ZRKAGM-POI ";
@@ -185,13 +191,15 @@ export class SymbolService {
             "🚀 ~ file: symbol.service.ts ~ line 59 ~ SymbolService ~ getTransaction ~ txInfo",
             txInfo
           );
-
-          const message = this.hexToString(txInfo["transaction"].message);
-          console.log(
-            "🚀 ~ file: symbol.service.ts ~ line 62 ~ SymbolService ~ getTransaction ~ message",
-            message
+          this.mosaicId.next(
+            txInfo["transaction"]["transactions"][0].transaction.id
           );
-          this.messageFromTransaction.next(message);
+          // const message = this.hexToString(txInfo["transaction"].message);
+          // console.log(
+          //   "🚀 ~ file: symbol.service.ts ~ line 62 ~ SymbolService ~ getTransaction ~ message",
+          //   message
+          // );
+          // this.messageFromTransaction.next(message);
         },
         (err) => console.error(err)
       );
@@ -234,6 +242,202 @@ export class SymbolService {
         },
         (err) => console.error(err)
       );
+  }
+
+  async makeAgregateTx(mosaicId, sumPayment, message) {
+    //const networkType = NetworkType.TEST_NET;
+    // replace with alice private key
+
+    const aliceAccount = Account.createFromPrivateKey(
+      this.userPrivateKey,
+      this.networkType
+    );
+    // replace with ticket distributor public key
+
+    const ticketDistributorPublicAccount = PublicAccount.createFromPublicKey(
+      this.sellerPublicKey,
+      this.networkType
+    );
+    // replace with ticket mosaic id
+    const ticketMosaicId = new MosaicId(mosaicId);
+    // replace with ticket mosaic id divisibility
+    const ticketDivisibility = 0;
+    // replace with symbol.xym id
+    const networkCurrencyMosaicId = new MosaicId(this.XYMMosaicId);
+    // replace with network currency divisibility
+    const networkCurrencyDivisibility = 6;
+
+    const aliceToTicketDistributorTx = TransferTransaction.create(
+      Deadline.create(this.epochAdjustment),
+      ticketDistributorPublicAccount.address,
+      [
+        new Mosaic(
+          networkCurrencyMosaicId,
+          UInt64.fromUint(
+            sumPayment * Math.pow(10, networkCurrencyDivisibility)
+          )
+        ),
+      ],
+      PlainMessage.create(
+        `send ${sumPayment} symbol.xym to distributor ${message}`
+      ),
+      this.networkType
+    );
+
+    const ticketDistributorToAliceTx = TransferTransaction.create(
+      Deadline.create(this.epochAdjustment),
+      aliceAccount.address,
+      [
+        new Mosaic(
+          ticketMosaicId,
+          UInt64.fromUint(1 * Math.pow(10, ticketDivisibility))
+        ),
+      ],
+      PlainMessage.create(
+        `send 1 NFT id: ${ticketMosaicId} mosaic to ${aliceAccount.address}`
+      ),
+      this.networkType
+    );
+
+    const aggregateTransaction = AggregateTransaction.createBonded(
+      Deadline.create(this.epochAdjustment),
+      [
+        aliceToTicketDistributorTx.toAggregate(aliceAccount.publicAccount),
+        ticketDistributorToAliceTx.toAggregate(ticketDistributorPublicAccount),
+      ],
+      this.networkType,
+      [],
+      UInt64.fromUint(2000000)
+    );
+
+    // replace with meta.networkGenerationHash (nodeUrl + '/node/info')
+
+    const signedTransaction = aliceAccount.sign(
+      aggregateTransaction,
+      this.networkGenerationHash
+    );
+    console.log("Aggregate Transaction Hash:", signedTransaction.hash);
+    const hashLockTransaction = HashLockTransaction.create(
+      Deadline.create(this.epochAdjustment),
+      new Mosaic(
+        networkCurrencyMosaicId,
+        UInt64.fromUint(10 * Math.pow(10, networkCurrencyDivisibility))
+      ),
+      UInt64.fromUint(480),
+      signedTransaction,
+      this.networkType,
+      UInt64.fromUint(2000000)
+    );
+
+    const signedHashLockTransaction = aliceAccount.sign(
+      hashLockTransaction,
+      this.networkGenerationHash
+    );
+
+    // replace with node endpoint
+    const listener = this.repositoryFactory.createListener();
+    const receiptHttp = this.repositoryFactory.createReceiptRepository();
+    const transactionService = new TransactionService(
+      this.transactionRepository,
+      receiptHttp
+    );
+
+    return listener.open().then(() => {
+      transactionService
+        .announceHashLockAggregateBonded(
+          signedHashLockTransaction,
+          signedTransaction,
+          listener
+        )
+        .subscribe(
+          (x) => console.log(x),
+          (err) => console.log(err),
+          () => listener.close()
+        );
+    });
+  }
+
+  async madeBid(mosaicId, sumForNft, message) {
+    const networkType = NetworkType.TEST_NET;
+
+    // replace with alice private key
+    // const alicePrivatekey = '';
+    const aliceAccount = Account.createFromPrivateKey(
+      this.userPrivateKey,
+      networkType
+    );
+
+    // replace with bob public key
+    // const sellerPublicKey = this.rawAddress;
+    const sellerPublicAccount = PublicAccount.createFromPublicKey(
+      this.sellerPublicKey,
+      networkType
+    );
+
+    const aliceTransferTransaction = TransferTransaction.create(
+      Deadline.create(this.epochAdjustment),
+      sellerPublicAccount.address,
+      [NetworkCurrencies.PUBLIC.currency.createRelative(sumForNft)],
+      PlainMessage.create(message),
+      networkType
+    );
+
+    const sellerTransferTransaction = TransferTransaction.create(
+      Deadline.create(this.epochAdjustment),
+      aliceAccount.address,
+      [new Mosaic(new NamespaceId(mosaicId), UInt64.fromUint(1))],
+      PlainMessage.create(message),
+      networkType
+    );
+
+    const aggregateTransaction = AggregateTransaction.createComplete(
+      Deadline.create(this.epochAdjustment),
+      [
+        aliceTransferTransaction.toAggregate(aliceAccount.publicAccount),
+        sellerTransferTransaction.toAggregate(sellerPublicAccount),
+      ],
+      networkType,
+      [],
+      UInt64.fromUint(2000000)
+    );
+
+    const signedTransactionNotComplete = aliceAccount.sign(
+      aggregateTransaction,
+      this.networkGenerationHash
+    );
+    return { signedTransactionNotComplete, sumForNft, aliceAccount };
+  }
+
+  sellNft(txNotComplete, buyerAccount) {
+    const sellerAccount = Account.createFromPrivateKey(
+      this.userPrivateKey,
+      this.networkType
+    );
+    const cosignedTransactionBob = CosignatureTransaction.signTransactionPayload(
+      sellerAccount,
+      txNotComplete.payload,
+      this.networkGenerationHash
+    );
+    console.log(cosignedTransactionBob.signature);
+    console.log(cosignedTransactionBob.parentHash);
+    const cosignatureSignedTransactions = [
+      new CosignatureSignedTransaction(
+        cosignedTransactionBob.parentHash,
+        cosignedTransactionBob.signature,
+        cosignedTransactionBob.signerPublicKey
+      ),
+    ];
+    const rectreatedAggregateTransactionFromPayload = TransactionMapping.createFromPayload(
+      txNotComplete.payload
+    ) as AggregateTransaction;
+
+    const signedTransactionComplete = buyerAccount.signTransactionGivenSignatures(
+      rectreatedAggregateTransactionFromPayload,
+      cosignatureSignedTransactions,
+      this.networkGenerationHash
+    );
+    console.log(signedTransactionComplete.hash);
+    this.annoannounceTx(signedTransactionComplete);
   }
 
   async doPayment(sum: number, billingId: string) {

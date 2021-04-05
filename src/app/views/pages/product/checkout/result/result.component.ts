@@ -58,10 +58,14 @@ export class ResultComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bill = this.billingService.getLocalBilling();
-    console.log("this.bill :>> ", this.bill);
+    // this.bill = this.billingService.getLocalBilling();
+    // console.log("this.bill :>> ", this.bill);
     this.symbolService.hasPrivateKey.subscribe((hasKey) => {
       this.hasPrivateKey = hasKey;
+      console.log(
+        "🚀 ~ file: result.component.ts ~ line 65 ~ ResultComponent ~ this.symbolService.hasPrivateKey.subscribe ~ hasKey",
+        hasKey
+      );
       if (this.hasPrivateKey) {
         this.toastrService.success(
           "Success",
@@ -88,6 +92,24 @@ export class ResultComponent implements OnInit {
       pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
       pdf.save("bill.pdf"); // Generated PDF
     });
+  }
+
+  makeBid(totalSum) {
+    this.isPayment = true;
+    this.symbolService
+      .makeAgregateTx("3E326F1224637AF3", totalSum, "byu NFT")
+      .then((result) => {
+        console.log(
+          "🚀 ~ file: result.component.ts ~ line 82 ~ ResultComponent ~ .then ~ result",
+          result
+        );
+
+        this.isPayment = false;
+        this.productService.clearBacket();
+        //this.billingService.clearBillFromLocalStorage();
+        this.toastrService.success(`Success bid`, result);
+        this.router.navigate(["/"]);
+      });
   }
 
   payment(totalSum: number) {

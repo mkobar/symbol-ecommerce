@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ProductService } from "../../../../shared/services/product.service";
 import { ToastrService } from "src/app/shared/services/toastr.service";
+import { SymbolService } from "src/app/shared/services/symbol.service";
 @Component({
   selector: "app-product-detail",
   templateUrl: "./product-detail.component.html",
@@ -11,11 +12,13 @@ import { ToastrService } from "src/app/shared/services/toastr.service";
 export class ProductDetailComponent implements OnInit, OnDestroy {
   private sub: any;
   product: Product;
+  mosaicId = 0;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private symbolService: SymbolService
   ) {
     this.product = new Product();
   }
@@ -24,6 +27,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe((params) => {
       const id = params.id; // (+) converts string 'id' to a number
       this.getProductDetail(id);
+    });
+    this.symbolService.mosaicId.subscribe((id) => {
+      this.mosaicId = id;
     });
   }
 
@@ -37,6 +43,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
         y.$key = id;
         this.product = y;
+        this.checkTransaction(this.product.bits[0].hash);
+        console.log(
+          "🚀 ~ file: product-detail.component.ts ~ line 40 ~ ProductDetailComponent ~ getProductDetail ~ his.product",
+          this.product
+        );
       },
       (error) => {
         this.toastrService.error("Error while fetching Product Detail", error);
@@ -50,5 +61,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  checkTransaction(tx) {
+    const message = this.symbolService.getTransaction(tx);
+    if (this.mosaicId !== 0) {
+      this.toastrService.success("Mosaic Id", this.mosaicId);
+    }
   }
 }

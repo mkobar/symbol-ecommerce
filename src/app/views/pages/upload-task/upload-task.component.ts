@@ -100,37 +100,39 @@ export class UploadTaskComponent implements OnInit {
     this.symbolService.createApostille();
   }
   createMosaic() {
-    this.symbolService.createMosaic("test1", this.downloadURL).then(() => {
-      this.symbolService.isCreatingMosaic.next(true);
-      this.symbolService.confirmedHash.subscribe((hash) => {
-        console.log(
-          "🚀 ~ file: result.component.ts ~ line 85 ~ ResultComponent ~ .then ~ hash",
-          hash
-        );
+    this.symbolService
+      .createMosaic(this.pictureName, this.downloadURL)
+      .then(() => {
+        this.symbolService.isCreatingMosaic.next(true);
+        this.symbolService.confirmedHash.subscribe((hash) => {
+          console.log(
+            "🚀 ~ file: result.component.ts ~ line 85 ~ ResultComponent ~ .then ~ hash",
+            hash
+          );
 
-        if (hash !== "") {
-          //this.products.map(prod => prod.$key = "qqwer")
-          const newNft = new Product();
-          newNft.productId = 1;
-          newNft.productImageUrl = this.downloadURL;
-          newNft.productPrice = this.startPrice;
-          newNft.productName = this.pictureName;
-          newNft.productQuatity = 1;
-          newNft.productSeller = "Picasso";
-          newNft.productCategory = "nft";
-          newNft.productDescription = this.descriptionFile;
-          const bit = new Bit();
-          bit.addressBuyer = "KJHJKHKJH";
-          bit.hash = "hash";
-          bit.rate = 14789654;
-          newNft.bits = [];
-          newNft.bits[0] = bit;
-          this.productService.createProduct(newNft);
-          this.toastrService.success(`New nft added ${hash}`, hash);
-          this.symbolService.isCreatingMosaic.next(false);
-          this.router.navigate(["/"]);
-        }
+          if (hash !== "") {
+            //this.products.map(prod => prod.$key = "qqwer")
+            const newNft = new Product();
+            newNft.productId = 1;
+            newNft.productImageUrl = this.downloadURL;
+            newNft.productPrice = this.startPrice;
+            newNft.productName = this.pictureName;
+            newNft.productQuatity = 1;
+            newNft.productSeller = "Picasso";
+            newNft.productCategory = "nft";
+            newNft.productDescription = this.descriptionFile;
+            const bit = new Bit();
+            bit.addressBuyer = "KJHJKHKJH";
+            bit.hash = hash;
+            bit.rate = 14789654;
+            newNft.bits = [];
+            newNft.bits[0] = bit;
+            this.productService.createProduct(newNft);
+            this.toastrService.success(`New nft added ${hash}`, hash);
+            this.symbolService.isCreatingMosaic.next(false);
+            this.router.navigate(["/"]);
+          }
+        });
       });
-    });
   }
 }

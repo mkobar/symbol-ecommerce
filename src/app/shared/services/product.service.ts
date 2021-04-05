@@ -29,12 +29,13 @@ export class ProductService {
   }
 
   createProduct(data: Product) {
-    if (this.products === undefined) {
+    console.log(
+      "🚀 ~ file: product.service.ts ~ line 34 ~ ProductService ~ createProduct ~ this.products",
+      this.products
+    );
+    if (!this.products) {
       this.products = this.db.list("products");
-      console.log(
-        "🚀 ~ file: product.service.ts ~ line 34 ~ ProductService ~ createProduct ~ this.products",
-        this.products
-      );
+
       this.products.push(data);
     } else {
       this.products.push(data);
