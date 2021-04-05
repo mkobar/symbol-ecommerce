@@ -19,7 +19,7 @@
     "serve:ssr": "node dist/nftshop/server/main.js",
     "build:ssr": "ng build --prod && ng run nftshop:server:production",
     "prerender": "ng run nftshop:prerender",
-    "deploy-gp": "npx deploy-gh --base-href=/symbol-nft/"
+    "deploy-gp": "npx ng deploy --repo=https://github.com/spreadzp/symbol-ecommerce.git --name=spreadzp --email=spread2009@gmail.com"
   },
   "husky": {
     "hooks": {
