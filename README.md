@@ -10,7 +10,8 @@ Tutorial how it works [NFT Symbol info.pptx](https://github.com/spreadzp/symbol-
 
 In the root we can use private key as qr code
 
-```prKeyExample.png
+```
+prKeyExample.png
 
 ```
 
