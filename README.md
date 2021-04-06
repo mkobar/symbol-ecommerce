@@ -6,6 +6,25 @@ Developing a **NFT Symbol Shop (Ecommerce) Application using Angular-9**.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 
+Tutorial how it works [NFT Symbol info.pptx](https://github.com/spreadzp/symbol-ecommerce/files/6262426/NFT.Symbol.info.pptx)
+
+In the root we can use private key as qr code
+
+```prKeyExample.png
+
+```
+
+For testing the app or use own. In the file only qr code of the private key
+in the page https://spreadzp.github.io/symbol-ecommerce/users
+you can use Symbol address
+
+```
+TDNS2KQNITF5DZGA3FXONKGVU6YBXEWKTOUGXQY
+```
+
+or past own address to input
+![image](https://user-images.githubusercontent.com/11519562/113666934-b2a15b00-96b8-11eb-8462-1bed99555824.png)
+
 ## Functionalities
 
 1.  User Registration using Firebase Authentication (using Email/Password | Google Authentication )
